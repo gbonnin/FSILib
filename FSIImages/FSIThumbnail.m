@@ -15,9 +15,9 @@
     UIImage *thumbnail = nil;
     if (size.width != 0 && size.height != 0)
     {
-        thumbnail = image;//[UIImage imageWithCIImage:image.CIImage];
         UIGraphicsBeginImageContext(size);
-        [thumbnail drawInRect:CGRectMake(0, 0, size.width, size.height)];
+        [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+        thumbnail = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
     }
     return thumbnail;
