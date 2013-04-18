@@ -1,5 +1,5 @@
 //
-//  CacheImage.m
+//  FSICacheImage.m
 //  FSILib
 //
 //  Created by Guillaume Bonnin on 30/11/12.
@@ -7,7 +7,7 @@
 //
 
 #import "FSICacheImage.h"
-#import "FSIThumbnail.h"
+#import "FSIImageTransformations.h"
 
 #define THUMBNAIL_EXTENSION @"thumbnail_"
 
@@ -29,7 +29,7 @@
     // Save a thumbnail of the image if size different of CGSizeZero
     if (size.width != 0 && size.height != 0)
     {
-        UIImage *thumbnail = [FSIThumbnail createThumbnailofImage:image WithSize:size];
+        UIImage *thumbnail = [FSIImageTransformations createThumbnailofImage:image WithSize:size];
         NSString *thumbnailName = [NSString stringWithFormat:@"%@%@", THUMBNAIL_EXTENSION, imageName];
         [self saveImage:thumbnail WithName:thumbnailName Directory:directory andCompressionLevel:compressionLevel];
     }
@@ -227,7 +227,7 @@
     // Running the image representation function writes the data from the image to a file
     if([imageName rangeOfString:@".png" options:NSCaseInsensitiveSearch].location != NSNotFound)
     {
-        imageData = UIImagePNGRepresentation(image);
+        imageData = UIImagePNGRepresentation([FSIImageTransformations fixImageOrientation:image]);
     }
     else if([imageName rangeOfString:@".jpg" options:NSCaseInsensitiveSearch].location != NSNotFound ||
             [imageName rangeOfString:@".jpeg" options:NSCaseInsensitiveSearch].location != NSNotFound)
@@ -241,7 +241,7 @@
             case kCompressionNone: compressionQuality = 1.0f; break;
         }
         
-        imageData = UIImageJPEGRepresentation(image, compressionQuality);
+        imageData = UIImageJPEGRepresentation([FSIImageTransformations fixImageOrientation:image], compressionQuality);
     }
     if (imageData == nil)
     {

@@ -1,5 +1,5 @@
 //
-//  CacheImage.h
+//  FSICacheImage.h
 //  FSILib
 //
 //  Created by Guillaume Bonnin on 30/11/12.
